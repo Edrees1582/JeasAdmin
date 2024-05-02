@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${#strings.capitalize(type)} + ' Dashboard'"></title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${#strings.capitalize(type)} + ' Dashboard'"></h1>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="jeasUser : ${jeasUsers}">
+            <td th:text="${jeasUser.name}"></td>
+            <td th:text="${jeasUser.email}"></td>
+            <td th:text="${jeasUser.status}"></td>
+            <td>
+                <a th:href="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${jeasUser.uid}" class="btn btn-primary">
+                    View Details
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/" class="btn btn-secondary">Back</a>
+</div>
+</body>
+</html>
