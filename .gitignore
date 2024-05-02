@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-jeas-cfe02-firebase-adminsdk-lcsyq-b7fb4da383.json
+*-firebase-adminsdk-*.json
