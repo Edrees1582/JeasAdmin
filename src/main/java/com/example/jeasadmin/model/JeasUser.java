@@ -15,6 +15,7 @@ public class JeasUser {
     private List<String> messages;
     private List<String> requests;
     private String personality;
+    private String fcmToken;
 
     public String getUid() {
         return uid;
@@ -112,6 +113,14 @@ public class JeasUser {
         this.personality = personality;
     }
 
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
     @Override
     public String toString() {
         return "JeasUser{" +
@@ -120,6 +129,12 @@ public class JeasUser {
                 ", email='" + email + '\'' +
                 ", phone_number='" + phone_number + '\'' +
                 ", status='" + status + '\'' +
+                ", description='" + description + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", personality='" + personality + '\'' +
+                ", fcmToken='" + fcmToken + '\'' +
+                ", birthday='" + birthday + '\'' +
                 '}';
     }
 }

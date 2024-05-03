@@ -1,6 +1,8 @@
 package com.example.jeasadmin.controller;
 
 import com.example.jeasadmin.model.JeasUser;
+import com.example.jeasadmin.model.NotificationRequest;
+import com.example.jeasadmin.service.FCMService;
 import com.example.jeasadmin.service.JeasUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ public class DashboardController {
     @Autowired
     JeasUserService jeasUserService;
 
+    @Autowired
+    private FCMService fcmService;
+
     @GetMapping("/customer/{id}")
     public String getCustomer(@PathVariable String id, Model model) throws ExecutionException, InterruptedException, IOException {
         model.addAttribute("jeasUser", jeasUserService.getJeasUserDetails(id, "customers"));
@@ -32,6 +37,7 @@ public class DashboardController {
         JeasUser customer = jeasUserService.getJeasUserDetails(id, "customers");
         customer.setStatus(status);
         jeasUserService.updateJeasUserDetails(customer, "customers");
+        fcmService.sendMessageToToken(new NotificationRequest("Account Status", "Your account with email: " + customer.getEmail() + " status has been changed to " + status, "", customer.getFcmToken()));
         redirectAttributes.addAttribute("id", id);
         return "redirect:/dashboard/customer/{id}";
     }
@@ -51,6 +57,7 @@ public class DashboardController {
         JeasUser worker = jeasUserService.getJeasUserDetails(id, "workers");
         worker.setStatus(status);
         jeasUserService.updateJeasUserDetails(worker, "workers");
+        fcmService.sendMessageToToken(new NotificationRequest("Account Status", "Your account with email: " + worker.getEmail() + " status has been changed to " + status, "", worker.getFcmToken()));
         redirectAttributes.addAttribute("id", id);
         return "redirect:/dashboard/worker/{id}";
     }
