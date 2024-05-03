@@ -1,7 +1,7 @@
 package com.example.jeasadmin.service;
 
 import com.example.jeasadmin.JeasAdminApplication;
-import com.example.jeasadmin.model.JeasUser;
+import com.example.jeasadmin.model.User;
 import com.google.api.core.ApiFuture;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -20,30 +20,30 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class JeasUserService {
-    public JeasUser getJeasUserDetails(String name, String type) throws InterruptedException, ExecutionException {
+public class UserService {
+    public User getUserDetails(String name, String type) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(type).document(name);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
 
         DocumentSnapshot document = future.get();
 
-        if(document.exists()) return document.toObject(JeasUser.class);
+        if(document.exists()) return document.toObject(User.class);
         else return null;
     }
 
-    public void updateJeasUserDetails(JeasUser jeasUser, String type) throws InterruptedException, ExecutionException {
+    public void updateUserDetails(User user, String type) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(type).document(jeasUser.getUid()).set(jeasUser);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(type).document(user.getUid()).set(user);
         collectionsApiFuture.get();
     }
 
-    public List<JeasUser> getAllJeasUsers(String type) throws InterruptedException, ExecutionException {
+    public List<User> getAllUsers(String type) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         Iterable<DocumentReference> documentReference = dbFirestore.collection(type).listDocuments();
         Iterator<DocumentReference> iterator = documentReference.iterator();
 
-        List<JeasUser> jeasUsers =new ArrayList<>();
+        List<User> users =new ArrayList<>();
 
         while(iterator.hasNext()){
             DocumentReference documentReference1 = iterator.next();
@@ -51,10 +51,10 @@ public class JeasUserService {
             DocumentSnapshot documentSnapshot = future.get();
 
             if(documentSnapshot.exists())
-                jeasUsers.add(documentSnapshot.toObject(JeasUser.class));
+                users.add(documentSnapshot.toObject(User.class));
         }
 
-        return jeasUsers;
+        return users;
     }
 
     public String getPhoto(String id) throws IOException {

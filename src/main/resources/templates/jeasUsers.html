@@ -18,12 +18,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="jeasUser : ${jeasUsers}">
-            <td th:text="${jeasUser.name}"></td>
-            <td th:text="${jeasUser.email}"></td>
-            <td th:text="${jeasUser.status}"></td>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.status}"></td>
             <td>
-                <a th:href="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${jeasUser.uid}" class="btn btn-primary">
+                <a th:href="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid}" class="btn btn-primary">
                     View Details
                 </a>
             </td>

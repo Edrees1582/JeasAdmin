@@ -2,7 +2,7 @@ package com.example.jeasadmin.model;
 
 import java.util.List;
 
-public class JeasUser {
+public class User {
     private String uid;
     private String name;
     private String email;
@@ -123,7 +123,7 @@ public class JeasUser {
 
     @Override
     public String toString() {
-        return "JeasUser{" +
+        return "User{" +
                 "uid='" + uid + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
