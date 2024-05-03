@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>User Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">Name: <span th:text="${user.name}"></span></p>
+            <p class="card-text">Email: <span th:text="${user.email}"></span></p>
+            <p class="card-text" th:if="${type.toLowerCase() eq 'workers'}">Birthday: <span th:text="${user.birthday}"></span></p>
+            <p class="card-text">Phone Number: <span th:text="${user.phone_number}"></span></p>
+            <p class="card-text">Status: <span th:text="${user.status}"></span></p>
+            <p class="card-text" th:if="${type.toLowerCase() eq 'workers'}">Skills: <span th:text="${user.skills}"></span></p>
+
+            <form th:action="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid} + '?status=activated'" method="post">
+                <button type="submit" class="btn btn-success" th:if="${user.status.toLowerCase() eq 'pending'}">Accept</button>
+            </form>
+
+            <form th:action="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid} + '?status=declined'" method="post">
+                <button type="submit" class="btn btn-danger" th:if="${user.status.toLowerCase() eq 'pending'}">Decline</button>
+            </form>
+
+            <form th:action="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid} + '?status=deactivated'" method="post">
+                <button type="submit" class="btn btn-warning" th:if="${user.status.toLowerCase() eq 'activated'}">Deactivate</button>
+            </form>
+
+            <form th:action="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid} + '?status=activated'" method="post">
+                <button type="submit" class="btn btn-primary" th:if="${user.status.toLowerCase() eq 'deactivated'}">Activate</button>
+            </form>
+
+            <form th:action="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid} + '?status=activated'" method="post">
+                <button type="submit" class="btn btn-primary" th:if="${user.status.toLowerCase() eq 'declined'}">Activate</button>
+            </form>
+            <h3>ID Image</h3>
+            <img th:src="${id_image}" width="750" height="750"  alt="ID Image"/>
+            <br /> <br />
+            <a th:href="'/dashboard/' + ${type.substring(0, type.length() - 1)}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
