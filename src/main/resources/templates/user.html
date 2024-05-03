@@ -12,9 +12,10 @@
         <div class="card-body">
             <p class="card-text">Name: <span th:text="${user.name}"></span></p>
             <p class="card-text">Email: <span th:text="${user.email}"></span></p>
-            <p class="card-text">Birthday: <span th:text="${user.birthday}"></span></p>
+            <p class="card-text" th:if="${type.toLowerCase() eq 'workers'}">Birthday: <span th:text="${user.birthday}"></span></p>
             <p class="card-text">Phone Number: <span th:text="${user.phone_number}"></span></p>
             <p class="card-text">Status: <span th:text="${user.status}"></span></p>
+            <p class="card-text" th:if="${type.toLowerCase() eq 'workers'}">Skills: <span th:text="${user.skills}"></span></p>
 
             <form th:action="'/dashboard/' + ${type.substring(0, type.length() - 1)} + '/' + ${user.uid} + '?status=activated'" method="post">
                 <button type="submit" class="btn btn-success" th:if="${user.status.toLowerCase() eq 'pending'}">Accept</button>

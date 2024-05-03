@@ -3,19 +3,19 @@ package com.example.jeasadmin.model;
 import java.util.List;
 
 public class User {
-    private String uid;
-    private String name;
-    private String email;
-    private String phone_number;
-    private String birthday;
-    private String status;
-    private String description;
-    private double latitude;
-    private double longitude;
-    private List<String> messages;
-    private List<String> requests;
-    private String personality;
-    private String fcmToken;
+    protected String uid;
+    protected String name;
+    protected String email;
+    protected String phone_number;
+    protected String birthday;
+    protected String status;
+    protected String description;
+    protected double latitude;
+    protected double longitude;
+    protected List<String> messages;
+    protected List<String> requests;
+    protected String personality;
+    protected String fcmToken;
 
     public String getUid() {
         return uid;

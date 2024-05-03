@@ -2,6 +2,7 @@ package com.example.jeasadmin.service;
 
 import com.example.jeasadmin.JeasAdminApplication;
 import com.example.jeasadmin.model.User;
+import com.example.jeasadmin.model.Worker;
 import com.google.api.core.ApiFuture;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -21,29 +22,40 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService {
-    public User getUserDetails(String name, String type) throws InterruptedException, ExecutionException {
+    public Object getUserDetails(String name, String type) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(type).document(name);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
 
         DocumentSnapshot document = future.get();
 
-        if(document.exists()) return document.toObject(User.class);
+        if (document.exists())
+            if (type.equals("customers"))
+                return document.toObject(User.class);
+            else if (type.equals("workers"))
+                return document.toObject(Worker.class);
+            else return null;
         else return null;
     }
 
-    public void updateUserDetails(User user, String type) throws InterruptedException, ExecutionException {
+    public void updateUserDetails(Object user, String type) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(type).document(user.getUid()).set(user);
-        collectionsApiFuture.get();
+        if (type.equalsIgnoreCase("customers")) {
+            ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(type).document(((User) user).getUid()).set(user);
+            collectionsApiFuture.get();
+        }
+        else if (type.equalsIgnoreCase("workers")) {
+            ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(type).document(((Worker) user).getUid()).set(user);
+            collectionsApiFuture.get();
+        }
     }
 
-    public List<User> getAllUsers(String type) throws InterruptedException, ExecutionException {
+    public List<Object> getAllUsers(String type) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         Iterable<DocumentReference> documentReference = dbFirestore.collection(type).listDocuments();
         Iterator<DocumentReference> iterator = documentReference.iterator();
 
-        List<User> users =new ArrayList<>();
+        List<Object> users =new ArrayList<>();
 
         while(iterator.hasNext()){
             DocumentReference documentReference1 = iterator.next();
@@ -51,7 +63,10 @@ public class UserService {
             DocumentSnapshot documentSnapshot = future.get();
 
             if(documentSnapshot.exists())
-                users.add(documentSnapshot.toObject(User.class));
+                if (type.equals("customers"))
+                    users.add(documentSnapshot.toObject(User.class));
+                else if (type.equals("workers"))
+                    users.add(documentSnapshot.toObject(Worker.class));
         }
 
         return users;
