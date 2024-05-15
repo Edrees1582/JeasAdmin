@@ -16,6 +16,8 @@ public class User {
     protected List<String> requests;
     protected String personality;
     protected String fcmToken;
+    protected List<String> comments;
+    protected List<Double> rates;
 
     public String getUid() {
         return uid;
@@ -119,6 +121,22 @@ public class User {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+
+    public List<Double> getRates() {
+        return rates;
+    }
+
+    public void setRates(List<Double> rates) {
+        this.rates = rates;
     }
 
     @Override
